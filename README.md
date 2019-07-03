@@ -1,7 +1,6 @@
 # Docker
 
-快速啟動
---------------
+## 快速啟動
 
   > 載入docker模組
   
@@ -10,12 +9,21 @@
   ```
   
   > 初始化設定
+  
+  使用php-fpm
 
   ```
   make init-fpm
-  or
+  ```
+  
+  或者使用swoole
+  
+  ```
   make init-swoole
   ```
+  
+  PS. 如果你要使用swoole功能，你需要擴展 
+[laravel-swoole](https://github.com/swooletw/laravel-swoole) 套件，並完成相關設定
   
   > 請為專案設定image名稱
   
@@ -28,10 +36,9 @@
   ```
   docker-compose up -d
   ```
---------------
+  
 
-如何開啟或關閉
---------------
+##如何開啟或關閉
 
   > 開啟Docker
   
