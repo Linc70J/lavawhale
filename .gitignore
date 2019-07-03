@@ -1,0 +1,8 @@
+.idea
+.DS_Store
+.env
+/logstash/pipeline/*.conf
+/logstash/config/pipelines.yml
+/logs
+/data
+*.yml
