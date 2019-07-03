@@ -3,6 +3,12 @@
 快速啟動
 --------------
 
+  > 載入docker模組
+  
+  ```
+  git submodule add https://github.com/Linc70J/lavawhale.git docker
+  ```
+  
   > 初始化設定
 
   ```
