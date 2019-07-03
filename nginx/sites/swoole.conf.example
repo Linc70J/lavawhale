@@ -20,6 +20,10 @@ server {
     root /var/www/public;
     index index.php index.html index.htm;
 
+    location = /index.php {
+        try_files /not_exists @swoole;
+    }
+
     location / {
         try_files $uri $uri/ @swoole;
     }
