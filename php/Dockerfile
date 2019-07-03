@@ -290,7 +290,7 @@ COPY ./docker/php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 COPY ./docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 # Copy php configuration
 COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
-# Copy supervisord.d.d configuration
+# Copy supervisord.d configuration
 COPY ./docker/php/supervisord.conf /etc/supervisord.conf
 # Copy project
 COPY ./ /var/www
