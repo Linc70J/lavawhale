@@ -40,7 +40,7 @@ server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection $connection_upgrade;
 
-        proxy_pass http://php-fpm:1215$suffix;
+        proxy_pass http://web:1215$suffix;
     }
 
     location ~ /\.ht {
