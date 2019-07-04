@@ -4,7 +4,7 @@ SHELL := /bin/bash
 .PHONY: init-fpm init-swoole
 
 init-fpm:
-    mkdir -p ../deploy/docker
+	mkdir -p ../deploy/docker
 	cp .env.example .env
 	cp .env.example ../deploy/docker/.env.dev
 	cp docker-compose.yml.example docker-compose.yml
@@ -15,7 +15,7 @@ init-fpm:
 	cp worker/supervisord.d/laravel-worker.conf.example worker/supervisord.d/laravel-worker.conf
 
 init-swoole:
-    mkdir -p ../deploy/docker
+	mkdir -p ../deploy/docker
 	cp .env.example .env
 	cp .env.example ../deploy/docker/.env.dev
 	cp docker-compose.yml.example docker-compose.yml
