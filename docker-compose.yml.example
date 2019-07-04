@@ -42,7 +42,7 @@ services:
       - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
       - ./web/supervisord.d:/etc/supervisord.d
     expose:
-      - ${NGINX_PHP_UPSTREAM_PORT}
+      - ${NGINX_PHP_FPM_PORT}
       - ${NGINX_PHP_SWOOLE_PORT}
     environment:
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
