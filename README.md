@@ -31,7 +31,7 @@
   
   ```
   cp deploy/docker/.env.dev docker/.env
-  cp deploy/docker/docker-compose.yml.dev docker/docker-compose.yml
+  cp deploy/docker/docker-compose.yml docker/docker-compose.yml
   ```
   
   > 請為專案設定image名稱

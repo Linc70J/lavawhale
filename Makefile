@@ -9,7 +9,7 @@ publish:
 	cp deploy.sh ../deploy/deploy.sh
 	cp docker-compose.yml.deploy ../deploy/docker-compose.yml
 	cp .env.example ../deploy/docker/.env.dev
-	cp docker-compose.yml.example ../deploy/docker/docker-compose.yml.dev
+	cp docker-compose.yml.example ../deploy/docker/docker-compose.yml
 	cp php/xdebug.ini.example php/xdebug.ini
 	cp .env.example .env
 	cp docker-compose.yml.example docker-compose.yml
