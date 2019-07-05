@@ -1,7 +1,7 @@
 # Tell Makefile to use bash
 SHELL := /bin/bash
 
-.PHONY: publish setup-fpm setup-swoole setup-worker
+.PHONY: publish publish-ignore setup-fpm setup-swoole setup-worker
 
 publish:
 	cp -r web ../deploy/shared/web
@@ -13,6 +13,9 @@ publish:
 	cp php/xdebug.ini.example php/xdebug.ini
 	cp .env.example .env
 	cp docker-compose.yml.example docker-compose.yml
+
+publish-ignore:
+	cp .dockerignore.example ../.dockerignore
 
 setup-fpm:
 	cp nginx/sites/php-fpm.conf.example nginx/sites/default.conf
