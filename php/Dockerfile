@@ -284,8 +284,6 @@ RUN apt-get clean && \
 # Copy laravel configuration
 COPY ./docker/php/laravel.ini /usr/local/etc/php/conf.d
 COPY ./docker/php/xlaravel.pool.conf /usr/local/etc/php-fpm.d/
-# Copy xdebug configuration for remote debugging
-COPY ./docker/php/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 # Copy opcache configuration
 COPY ./docker/php/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 # Copy php configuration
