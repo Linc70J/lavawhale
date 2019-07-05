@@ -1,7 +1,7 @@
 # Tell Makefile to use bash
 SHELL := /bin/bash
 
-.PHONY: publish setup-fpm setup-swoole
+.PHONY: publish setup-fpm setup-swoole setup-worker
 
 publish:
 	cp -r web ../deploy/shared/web
@@ -13,8 +13,6 @@ publish:
 	cp php/xdebug.ini.example php/xdebug.ini
 	cp .env.example .env
 	cp docker-compose.yml.example docker-compose.yml
-	cp worker/supervisord.d/laravel-schedule.conf.example worker/supervisord.d/laravel-schedule.conf
-	cp worker/supervisord.d/laravel-worker.conf.example worker/supervisord.d/laravel-worker.conf
 
 setup-fpm:
 	cp nginx/sites/php-fpm.conf.example nginx/sites/default.conf
@@ -23,3 +21,7 @@ setup-fpm:
 setup-swoole:
 	cp nginx/sites/swoole.conf.example nginx/sites/default.conf
 	cp web/supervisord.d/laravel-swoole.conf.example web/supervisord.d/laravel-web-service.conf
+
+setup-worker:
+	cp worker/supervisord.d/laravel-schedule.conf.example worker/supervisord.d/laravel-schedule.conf
+	cp worker/supervisord.d/laravel-worker.conf.example worker/supervisord.d/laravel-worker.conf
