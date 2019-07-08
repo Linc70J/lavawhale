@@ -293,6 +293,8 @@ COPY ./docker/php/supervisord.conf /etc/supervisord.conf
 # Copy project
 COPY ./ /var/www
 
+RUN rm -rf /var/www/docker
+
 USER root
 
 RUN usermod -u 1000 www-data
