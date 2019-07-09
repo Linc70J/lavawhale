@@ -2,10 +2,6 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
 
-    return 301 https://$host$request_uri;
-}
-
-server {
     listen 443 ssl default_server;
     listen [::]:443 ssl default_server ipv6only=on;
     ssl_certificate /etc/nginx/ssl/default.crt;
