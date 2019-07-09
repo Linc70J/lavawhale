@@ -18,13 +18,13 @@ publish-ignore:
 	cp -n .dockerignore.example ../.dockerignore
 
 setup-fpm:
-	cp -n nginx/sites/php-fpm.conf.example nginx/sites/default.conf
-	cp -n web/supervisord.d/laravel-php-fpm.conf.example web/supervisord.d/laravel-web-service.conf
+	cp nginx/sites/php-fpm.conf.example nginx/sites/default.conf
+	cp web/supervisord.d/laravel-php-fpm.conf.example web/supervisord.d/laravel-web-service.conf
 
 setup-swoole:
-	cp -n nginx/sites/swoole.conf.example nginx/sites/default.conf
-	cp -n web/supervisord.d/laravel-swoole.conf.example web/supervisord.d/laravel-web-service.conf
+	cp nginx/sites/swoole.conf.example nginx/sites/default.conf
+	cp web/supervisord.d/laravel-swoole.conf.example web/supervisord.d/laravel-web-service.conf
 
 setup-worker:
-	cp -n worker/supervisord.d/laravel-schedule.conf.example worker/supervisord.d/laravel-schedule.conf
-	cp -n worker/supervisord.d/laravel-worker.conf.example worker/supervisord.d/laravel-worker.conf
+	cp worker/supervisord.d/laravel-schedule.conf.example worker/supervisord.d/laravel-schedule.conf
+	cp worker/supervisord.d/laravel-worker.conf.example worker/supervisord.d/laravel-worker.conf
