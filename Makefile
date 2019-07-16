@@ -17,6 +17,10 @@ publish:
 	cp -n worker/supervisord.d/laravel-schedule.conf.example worker/supervisord.d/laravel-schedule.conf
 	cp -n worker/supervisord.d/laravel-worker.conf.example worker/supervisord.d/laravel-worker.conf
 	cp -n nginx/sites/php-fpm.conf.example nginx/sites/default.conf
+	mkdir -p ../deploy/shared/web
+	mkdir -p ../deploy/shared/worker
+	mkdir -p ../deploy/shared/nginx/sites
+	mkdir -p ../deploy/shared/nginx/ssl
 	cp -rf -n web ../deploy/shared/web
 	cp -rf -n worker ../deploy/shared/worker
 	cp -rf -n nginx/sites ../deploy/shared/nginx/sites
