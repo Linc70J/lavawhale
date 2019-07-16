@@ -4,7 +4,7 @@ SHELL := /bin/bash
 .PHONY: publish publish-ignore setup-fpm setup-swoole
 
 publish:
-	cp -n deploy.sh ../deploy/deploy.sh
+	cp -rf -n deploy.sh ../deploy/deploy.sh
 	cp -n docker-compose.yml.deploy ../deploy/docker-compose.yml
 	cp -n .env.example ../deploy/docker/.env.dev
 	cp -n docker-compose.yml.example ../deploy/docker/docker-compose.yml
