@@ -1,10 +1,10 @@
 ### Web Server ###########################################
 web:
-  image: registry.larvata.tw/career_web:${IMAGE_TAG}
+  image: registry.larvata.tw/web:${IMAGE_TAG}
   volumes:
-    - ./shared/storage:/var/www/public/storage
-    - ./shared/log/laravel:/var/www/storage/logs
     - ./shared/.env:/var/www/.env
+    - ./shared/web/storage:/var/www/storage/app/public
+    - ./shared/web/framework:/var/www/storage/framework
     - ./shared/web/supervisord.d:/etc/supervisord.d
   expose:
     - "9000"
@@ -12,22 +12,22 @@ web:
 
 ### Worker Server ########################################
 worker:
-  image: registry.larvata.tw/career_web:${IMAGE_TAG}
+  image: registry.larvata.tw/web:${IMAGE_TAG}
   volumes:
-    - ./shared/storage:/var/www/public/storage
-    - ./shared/log/laravel:/var/www/storage/logs
     - ./shared/.env:/var/www/.env
+    - ./shared/web/storage:/var/www/storage/app/public
+    - ./shared/web/framework:/var/www/storage/framework
     - ./shared/worker/supervisord.d:/etc/supervisord.d
 
 ### NGINX Server #########################################
 nginx:
-  image: registry.larvata.tw/career_nginx:${IMAGE_TAG}
+  image: registry.larvata.tw/nginx:${IMAGE_TAG}
   volumes:
-    - ./shared/storage:/var/www/public/storage
-    - ./shared/log/nginx:/var/log/nginx
+    - ./shared/storage:/var/www/storage
+    - ./shared/nginx/log:/var/log/nginx
     - ./shared/nginx/sites:/etc/nginx/sites-available
     - ./shared/nginx/ssl:/etc/nginx/ssl
   environment:
-    - VIRTUAL_HOST=career.larvata.tw
+    - VIRTUAL_HOST=
   links:
     - "web:web"
