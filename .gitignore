@@ -6,3 +6,6 @@
 /logs
 /data
 *.yml
+/nginx/sites/*.conf
+/web/supervisord.d/*.conf
+/worker/supervisord.d/*.conf
