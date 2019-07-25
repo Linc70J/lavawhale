@@ -1,8 +1,6 @@
 version: '3'
 
 networks:
-  frontend:
-    driver: ${NETWORKS_DRIVER}
   backend:
     driver: ${NETWORKS_DRIVER}
 
@@ -104,5 +102,4 @@ services:
     depends_on:
       - web
     networks:
-      - frontend
       - backend

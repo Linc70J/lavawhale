@@ -8,7 +8,6 @@ publish:
 	mkdir -p ../deploy/shared/web
 	mkdir -p ../deploy/shared/worker
 	mkdir -p ../deploy/shared/nginx/sites
-	mkdir -p ../deploy/shared/nginx/ssl
 	cp -i deploy.sh ../deploy/deploy.sh
 	cp -i docker-compose.yml.deploy ../deploy/docker-compose.yml
 	cp -i .env.example ../deploy/docker/.env.dev
@@ -16,7 +15,6 @@ publish:
 	cp -r -i web ../deploy/shared/web
 	cp -r -i worker ../deploy/shared/worker
 	cp -r -i nginx/sites ../deploy/shared/nginx/sites
-	cp -r -i nginx/ssl ../deploy/shared/nginx/ssl
 
 publish-ignore:
 	cp -i .dockerignore.example ../.dockerignore
