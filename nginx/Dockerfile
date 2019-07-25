@@ -10,7 +10,7 @@ RUN set -x ; \
     adduser -u 82 -D -S -G www-data www-data && exit 0 ; exit 1
 
 ARG PHP_FPM_PORT=9000
-ARG PHP_FPM_PORT=1215
+ARG PHP_SWOOLE_PORT=1215
 
 # Set upstream conf and remove the default conf
 RUN echo "upstream php-upstream { server web:${PHP_FPM_PORT}; }" > /etc/nginx/conf.d/upstream.conf \
