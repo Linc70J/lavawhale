@@ -14,7 +14,7 @@ ARG PHP_SWOOLE_PORT=1215
 
 # Set upstream conf and remove the default conf
 RUN echo "upstream php-upstream { server web:${PHP_FPM_PORT}; }" > /etc/nginx/conf.d/upstream.conf \
-    && echo "upstream swoole-upstream { server web:${PHP_SWOOLE_PORT}; }" > /etc/nginx/conf.d/upstream.conf \
+#    && echo "upstream swoole-upstream { server web:${PHP_SWOOLE_PORT}; }" > /etc/nginx/conf.d/upstream.conf \
     && rm /etc/nginx/conf.d/default.conf
 
 # Set nginx configuration
