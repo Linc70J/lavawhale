@@ -92,6 +92,7 @@ services:
       dockerfile: docker/nginx/Dockerfile
       args:
         - PHP_FPM_PORT=${NGINX_PHP_FPM_PORT}
+        - PHP_SWOOLE_PORT=${NGINX_PHP_SWOOLE_PORT}
     volumes:
       - ${APP_CODE_PATH_HOST}/public:${APP_CODE_PATH_CONTAINER}/public${APP_CODE_CONTAINER_FLAG}
       - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
