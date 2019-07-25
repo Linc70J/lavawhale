@@ -6,6 +6,7 @@ SHELL := /bin/bash
 publish:
 	mkdir -p ../deploy/docker
 	mkdir -p ../deploy/shared/nginx
+	cp -i init.sh ../deploy/init.sh
 	cp -i deploy.sh ../deploy/deploy.sh
 	cp -i docker-compose.yml.deploy ../deploy/docker-compose.yml
 	cp -i .env.example ../deploy/docker/.env.dev
