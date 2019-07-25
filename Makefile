@@ -5,16 +5,14 @@ SHELL := /bin/bash
 
 publish:
 	mkdir -p ../deploy/docker
-	mkdir -p ../deploy/shared/web
-	mkdir -p ../deploy/shared/worker
-	mkdir -p ../deploy/shared/nginx/sites
+	mkdir -p ../deploy/shared/nginx
 	cp -i deploy.sh ../deploy/deploy.sh
 	cp -i docker-compose.yml.deploy ../deploy/docker-compose.yml
 	cp -i .env.example ../deploy/docker/.env.dev
 	cp -i docker-compose.yml.example ../deploy/docker/docker-compose.yml
-	cp -r -i web ../deploy/shared/web
-	cp -r -i worker ../deploy/shared/worker
-	cp -r -i nginx/sites ../deploy/shared/nginx/sites
+	cp -r -i web ../deploy/shared
+	cp -r -i worker ../deploy/shared
+	cp -r -i nginx/sites ../deploy/shared/nginx
 
 publish-ignore:
 	cp -i .dockerignore.example ../.dockerignore
