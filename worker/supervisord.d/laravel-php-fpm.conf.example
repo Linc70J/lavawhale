@@ -1,6 +1,0 @@
-[program:laravel-php-fpm]
-process_name=%(program_name)s_%(process_num)02d
-command=docker-php-entrypoint php-fpm
-autostart=true
-autorestart=true
-numprocs=1

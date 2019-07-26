@@ -312,8 +312,6 @@ RUN if [ ${COMPOSER_INSTALL} = true ]; then \
     fi \
 ;fi
 
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-
 ENTRYPOINT ["/usr/bin/supervisord"]
 
 CMD ["-n", "-c", "/etc/supervisord.conf"]
