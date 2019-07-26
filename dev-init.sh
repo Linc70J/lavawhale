@@ -23,7 +23,7 @@ select yn in "Yes" "No"; do
 done
 
 echo '大俠請選擇要使用哪個 Web Server: '
-options=('FPM' 'Swoole')
+options=('FPM' 'SWOOLE')
 select opt in "${options[@]}"
 do
     case $opt in
