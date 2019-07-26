@@ -1,40 +1,54 @@
-### Web Server ###########################################
-web:
-  image: ${REGISTRY_HOST}/${IMAGE_NAME}_web:${TAG}
-  volumes:
-    - ./shared/.env:/var/www/.env
-    - ./shared/web/storage:/var/www/storage/app/public
-    - ./shared/web/framework/sessions:/var/www/storage/framework/sessions
-    - ./shared/web/framework/views:/var/www/storage/framework/views
-    - ./shared/web/framework/cache:/var/www/storage/framework/cache
-    - ./shared/web/supervisord.d:/etc/supervisord.d
-  expose:
-    - "9000"
-    - "1215"
+version: '3'
 
-### Worker Server ########################################
-worker:
-  image: ${REGISTRY_HOST}/${IMAGE_NAME}_web:${TAG}
-  volumes:
-    - ./shared/.env:/var/www/.env
-    - ./shared/web/storage:/var/www/storage/app/public
-    - ./shared/web/framework/sessions:/var/www/storage/framework/sessions
-    - ./shared/web/framework/views:/var/www/storage/framework/views
-    - ./shared/web/framework/cache:/var/www/storage/framework/cache
-    - ./shared/worker/supervisord.d:/etc/supervisord.d
+networks:
+  backend:
+    driver: ${NETWORKS_DRIVER}
 
-### NGINX Server #########################################
-nginx:
-  image: ${REGISTRY_HOST}/${IMAGE_NAME}_nginx:${TAG}
-  volumes:
-    - ./shared/storage:/var/www/storage
-    - ./shared/nginx/log:/var/log/nginx
-    - ./shared/nginx/sites:/etc/nginx/sites-available
-    - ./shared/nginx/ssl:/etc/nginx/ssl
-  environment:
-    - VIRTUAL_HOST=
-  ports:
-    - "${NGINX_HOST_HTTP_PORT}:80"
-    - "${NGINX_HOST_HTTPS_PORT}:443"
-  links:
-    - "web:web"
+services:
+
+  ### Web Server #######################################
+  web:
+    image: ${REGISTRY_HOST}/${IMAGE_NAME}_web:${TAG}
+    volumes:
+      - ./shared/.env:/var/www/.env
+      - ./shared/web/storage:/var/www/storage/app/public
+      - ./shared/web/framework/sessions:/var/www/storage/framework/sessions
+      - ./shared/web/framework/views:/var/www/storage/framework/views
+      - ./shared/web/framework/cache:/var/www/storage/framework/cache
+      - ./shared/web/supervisord.d:/etc/supervisord.d
+    expose:
+      - "9000"
+      - "1215"
+    networks:
+      - backend
+
+  ### Worker Server ####################################
+  worker:
+    image: ${REGISTRY_HOST}/${IMAGE_NAME}_web:${TAG}
+    volumes:
+      - ./shared/.env:/var/www/.env
+      - ./shared/web/storage:/var/www/storage/app/public
+      - ./shared/web/framework/sessions:/var/www/storage/framework/sessions
+      - ./shared/web/framework/views:/var/www/storage/framework/views
+      - ./shared/web/framework/cache:/var/www/storage/framework/cache
+      - ./shared/worker/supervisord.d:/etc/supervisord.d
+    networks:
+      - backend
+
+  ### NGINX Server #####################################
+  nginx:
+    image: ${REGISTRY_HOST}/${IMAGE_NAME}_nginx:${TAG}
+    volumes:
+      - ./shared/storage:/var/www/storage
+      - ./shared/nginx/log:/var/log/nginx
+      - ./shared/nginx/sites:/etc/nginx/sites-available
+      - ./shared/nginx/ssl:/etc/nginx/ssl
+    environment:
+      - VIRTUAL_HOST=
+    ports:
+      - "${NGINX_HOST_HTTP_PORT}:80"
+      - "${NGINX_HOST_HTTPS_PORT}:443"
+    depends_on:
+      - web
+    networks:
+      - backend
