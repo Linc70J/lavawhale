@@ -3,6 +3,7 @@
 echo '部署檢查:'
 if test -f "shared/.env"; then
     echo "shared/.env ok"
+    exit
 else
     echo "未設定 shared/.env"
 fi
