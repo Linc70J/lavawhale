@@ -7,7 +7,7 @@ first-setup:
 	git submodule init
 	git submodule update
 	cp -i .env.example .env
-	cp -i php/xdebug.ini.example php/xdebug.ini
+	cp -i docker/php/xdebug.ini.example docker/php/xdebug.ini
 	make reload
 
 reload:
@@ -29,7 +29,7 @@ start:
 	make migrate
 
 stop:
-	cd docker; docker-compose stop;
+	cd docker; docker-compose down;
 
 restart:
 	make stop
@@ -48,7 +48,7 @@ clean:
 	cd docker; docker-compose exec web php artisan cache:clear
 
 exec:
-	docker-compose exec web $(filter-out $@,$(MAKECMDGOALS))
+	cd docker; docker-compose exec web $(filter-out $@,$(MAKECMDGOALS))
 
 %:
 	@:
