@@ -17,8 +17,8 @@ services:
       - ./shared/web/framework/cache:/var/www/storage/framework/cache
       - ./shared/web/supervisord.d:/etc/supervisord.d
     expose:
-      - "9000"
-      - "1215"
+      - ${NGINX_PHP_FPM_PORT}
+      - ${NGINX_PHP_SWOOLE_PORT}
     networks:
       - backend
 
