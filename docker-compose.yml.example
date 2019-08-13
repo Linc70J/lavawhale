@@ -9,7 +9,8 @@ services:
   ### Web Server #######################################
   web:
     build:
-      dockerfile: php/Dockerfile
+      context: ../
+      dockerfile: docker/php/Dockerfile
       args:
         - COMPOSER_INSTALL=${PHP_COMPOSER_INSTALL}
         - COMPOSER_INSTALL_DEV=${PHP_COMPOSER_INSTALL_DEV}
