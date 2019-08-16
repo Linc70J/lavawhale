@@ -1,54 +1,69 @@
 # Tell Makefile to use bash
 SHELL := /bin/bash
 
+# Source .env to get current config
+#ENV = set -a; touch .env; source .env;
+
+# One worker at the time
+MAKEFLAGS = --jobs=1
+
+# Get the latest git tag as the release docker image tag
+#RELEASE_VERSION = `/usr/bin/env git describe --abbrev=0`
+
 .PHONY: first-setup reload setup-web build start stop restart composer-install migrate seed clean exec
 
-first-setup:
+first-setup: ## 初始化專案環境
 	git submodule init
 	git submodule update
 	cp -i .env.example .env
 	cp -i docker/php/xdebug.ini.example docker/php/xdebug.ini
 	make reload
 
-reload:
+reload: ## 配置 PHP 常用套件與環境
 	cp -i deploy/docker/.env.dev docker/.env
 	cp -i deploy/docker/docker-compose.yml docker/docker-compose.yml
 	bash docker/scripts/setup-schedule.sh
 	bash docker/scripts/setup-worker.sh
 	make setup-web
 
-setup-web:
+setup-web: ## 配置 php-fpm 或 Swoole
 	bash docker/scripts/setup-web.sh
 
-build:
+build: ## 編譯 Docker Images
 	cd docker; docker-compose build;
 
-start:
+start: ## 啟動服務
 	cd docker; docker-compose up -d;
 	make composer-install
 	make migrate
 
-stop:
+stop: ## 停止服務
 	cd docker; docker-compose down;
 
-restart:
+restart: ## 重啓服務
 	make stop
 	make start
 
-composer-install:
+composer-install: ## 在 Container 內執行 composer install
 	cd docker; docker-compose exec web composer install --ignore-platform-reqs
 
-migrate:
+migrate: ## 在 Container 內執行 database migrate
 	cd docker; docker-compose exec web php artisan migrate
 
-seed:
+seed: ## 在 Container 內執行 database seed
 	cd docker; docker-compose exec web php artisan db:seed
 
-clean:
+clean: ## 在 Container 內清理 Laravel Cache
 	cd docker; docker-compose exec web php artisan cache:clear
 
-exec:
+exec: ## 進行 Container 的 Shell
 	cd docker; docker-compose exec web $(filter-out $@,$(MAKECMDGOALS))
 
-%:
+%: ## ???
 	@:
+
+# Absolutely awesome: http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+help: ## help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+.DEFAULT_GOAL := help
