@@ -5,7 +5,7 @@
 *.swp
 /node_modules
 /vendor
-/deploy/docker
+/build
 .editorconfig
 .circleci
 .git

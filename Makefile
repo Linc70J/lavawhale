@@ -4,4 +4,4 @@ SHELL := /bin/bash
 .PHONY: publish
 
 publish:
-	bash publish.sh
+	cp -r publish/ ../

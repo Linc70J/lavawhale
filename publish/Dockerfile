@@ -1,4 +1,4 @@
-FROM linc70j/php-swoole:1.0.2
+FROM linc70j/php-swoole:2.0.0-beta
 
 # Set Environment Variables
 ENV DEBIAN_FRONTEND noninteractive
@@ -22,7 +22,6 @@ ARG INSTALL_YARN=false
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    rm -R /var/lib/apt/lists/lock && \
     apt-get update && \
     # SSH2:
     if [ ${INSTALL_SSH2} = true ]; then \
@@ -48,12 +47,12 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
     # IMAP:
     if [ ${INSTALL_IMAP} = true ]; then \
         apt-get install -y libc-client-dev libkrb5-dev && \
-        rm -r /var/lib/apt/lists/* && \
         docker-php-ext-configure imap --with-kerberos --with-imap-ssl && \
         docker-php-ext-install imap \
     ;fi && \
     # Imagick
     if [ ${INSTALL_IMAGICK} = true ]; then \
+        apt-get install -y libmagickwand-dev imagemagick && \
         pecl install imagick && \
         docker-php-ext-enable imagick \
     ;fi && \
@@ -114,7 +113,10 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
         && docker-php-ext-enable pdo_sqlsrv sqlsrv \
         && php -m | grep -q 'pdo_sqlsrv' \
         && php -m | grep -q 'sqlsrv' \
-    ;fi
+    ;fi && \
+    buildDeps='gcc make autoconf libc-dev pkg-config' && \
+    apt-get purge -y --auto-remove $buildDeps && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #
 #--------------------------------------------------------------------------
@@ -124,25 +126,28 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
 
 # Copy project
 COPY ./ /var/www
-COPY ./docker/php /opt/tmp
-
-    # Copy laravel configuration
-RUN cp /opt/tmp/laravel.ini /usr/local/etc/php/conf.d && \
-    cp /opt/tmp/xlaravel.pool.conf /usr/local/etc/php-fpm.d && \
-    # Copy opcache configuration
-    cp /opt/tmp/opcache.ini /usr/local/etc/php/conf.d/opcache.ini && \
-    # Copy php configuration
-    cp /opt/tmp/php.ini /usr/local/etc/php/php.ini && \
-    # Copy supervisord.d configuration
-    cp /opt/tmp/supervisord.conf /etc/supervisord.conf && \
-    rm -rf /var/www/docker && \
-    rm -rf /opt/tmp
 
 USER root
 
 RUN usermod -u 1000 www-data
 
 WORKDIR /var/www
+
+    # Copy nginx configuration
+RUN cp deploy/config/nginx.conf /etc/nginx/ && \
+    rm /etc/nginx/conf.d/default.conf && \
+    cp -r deploy/shared/sites /etc/nginx/sites-available && \
+    cp -r deploy/shared/ssl /etc/nginx/ssl && \
+    # Copy laravel configuration
+    cp deploy/config/laravel.ini /usr/local/etc/php/conf.d && \
+    cp deploy/config/xlaravel.pool.conf /usr/local/etc/php-fpm.d && \
+    # Copy opcache configuration
+    cp deploy/config/opcache.ini /usr/local/etc/php/conf.d/opcache.ini && \
+    # Copy php configuration
+    cp deploy/config/php.ini /usr/local/etc/php/php.ini && \
+    # Copy supervisord.d configuration
+    cp deploy/config/supervisord.conf /etc/supervisord.conf && \
+    rm -rf docker deploy build
 
 ARG COMPOSER_INSTALL=false
 ARG COMPOSER_INSTALL_DEV=false
@@ -158,3 +163,5 @@ RUN if [ ${COMPOSER_INSTALL} = true ]; then \
 ENTRYPOINT ["/usr/bin/supervisord"]
 
 CMD ["-n", "-c", "/etc/supervisord.conf"]
+
+EXPOSE 80 443
