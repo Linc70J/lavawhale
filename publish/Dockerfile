@@ -146,6 +146,7 @@ RUN cp deploy/config/nginx.conf /etc/nginx/ && \
     # Copy php configuration
     cp deploy/config/php.ini /usr/local/etc/php/php.ini && \
     # Copy supervisord.d configuration
+    cp deploy/config/startup.sh /opt/startup.sh && \
     cp deploy/config/supervisord.conf /etc/supervisord.conf && \
     rm -rf docker deploy build
 
@@ -160,8 +161,6 @@ RUN if [ ${COMPOSER_INSTALL} = true ]; then \
     fi \
 ;fi
 
-ENTRYPOINT ["/usr/bin/supervisord"]
-
-CMD ["-n", "-c", "/etc/supervisord.conf"]
+CMD ["/bin/bash", "/opt/startup.sh"]
 
 EXPOSE 80 443
