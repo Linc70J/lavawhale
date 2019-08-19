@@ -1,12 +1,10 @@
 #!/bin/bash
 
-echo "大俠要開啟Schedule功能嗎?"
-select yn in "Yes" "No"; do
+while true; do
+    read -p "大俠要開啟Schedule功能嗎? (y/n [n]) " yn
     case $yn in
-        Yes )
-	        cp -i deploy/shared/worker/laravel-schedule.conf.example deploy/shared/worker/laravel-schedule.conf
-            break;;
-        No ) break;;
-        *) echo "invalid option $REPLY";;
+        [Yy]* ) cp -i deploy/shared/worker/laravel-schedule.conf.example deploy/shared/worker/laravel-schedule.conf; break;;
+        [Nn]* ) exit;;
+        * ) echo "invalid option $REPLY";;
     esac
 done
