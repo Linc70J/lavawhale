@@ -163,4 +163,4 @@ RUN if [ ${COMPOSER_INSTALL} = true ]; then \
 
 CMD ["/bin/bash", "/opt/startup.sh"]
 
-EXPOSE 80 443
+EXPOSE 80 443 5000
