@@ -6,12 +6,12 @@ SHELL := /bin/bash
 first-setup: ## 初始化專案環境
 	git submodule init
 	git submodule update
-	cp -i deploy/config/xdebug.ini.example deploy/config/xdebug.ini
-	cp -i deploy/shared/web/laravel-nginx.conf.example deploy/shared/web/laravel-nginx.conf
+	cp deploy/config/xdebug.ini.example deploy/config/xdebug.ini
+	cp deploy/shared/web/laravel-nginx.conf.example deploy/shared/web/laravel-nginx.conf
 	make reload
 
 reload: ## 配置 PHP 常用套件與環境
-	cp -i build/.env.dev build/.env
+	bash docker/scripts/copy-env.sh
 	bash docker/scripts/setup-schedule.sh
 	bash docker/scripts/setup-worker.sh
 	make setup-web
@@ -33,7 +33,7 @@ down: ## 停止服務
 
 restart: ## 重啓服務
 	make down
-	make up
+	make start
 
 composer-install: ## 在 Container 內執行 composer install
 	cd build; docker-compose exec web composer install --ignore-platform-reqs
