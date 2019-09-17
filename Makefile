@@ -5,3 +5,4 @@ SHELL := /bin/bash
 
 publish:
 	cp -r publish/ ../
+	vim ../build/.env.dev
