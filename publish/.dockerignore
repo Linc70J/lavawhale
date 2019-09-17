@@ -17,6 +17,6 @@ webpack.mix.js
 yarn.lock
 _ide_helper.php
 _ide_helper_models.php
-docker-compose.local.yml
 phpunit.xml
+Dockerfile
 Makefile
