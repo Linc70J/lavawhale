@@ -133,10 +133,13 @@ RUN usermod -u 1000 www-data
 
 WORKDIR /var/www
 
+ARG APP_ENV='DEVELOP'
+
     # Copy nginx configuration
 RUN cp deploy/config/nginx.conf /etc/nginx/ && \
     rm /etc/nginx/conf.d/default.conf && \
     cp -r deploy/shared/sites /etc/nginx/sites-available && \
+    cp deploy/shared/sites/php-fpm.conf.example /etc/nginx/sites-available/default.conf && \
     cp -r deploy/shared/ssl /etc/nginx/ssl && \
     # Copy laravel configuration
     cp deploy/config/laravel.ini /usr/local/etc/php/conf.d && \
@@ -148,18 +151,12 @@ RUN cp deploy/config/nginx.conf /etc/nginx/ && \
     # Copy supervisord.d configuration
     cp deploy/config/startup.sh /opt/startup.sh && \
     cp deploy/config/supervisord.conf /etc/supervisord.conf && \
+    # Setup nginx
+    mkdir /etc/supervisord.d && \
+    cp deploy/shared/web/laravel-nginx.conf.example /etc/supervisord.d/laravel-nginx.conf && \
+    # Custom build setting
+    bash deploy/config/build.sh && \
     rm -rf docker deploy build
-
-ARG COMPOSER_INSTALL=false
-ARG COMPOSER_INSTALL_DEV=false
-
-RUN if [ ${COMPOSER_INSTALL} = true ]; then \
-    if [ ${COMPOSER_INSTALL_DEV} = true ]; then \
-        composer install; \
-    else \
-        composer install --no-dev; \
-    fi \
-;fi
 
 CMD ["/bin/bash", "/opt/startup.sh"]
 
