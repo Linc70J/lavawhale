@@ -33,7 +33,7 @@ services:
       - ../deploy/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
       - ../deploy/shared/web:/etc/supervisord.d
       - ../deploy/shared/sites:/etc/nginx/sites-available
-      - ../deploy/shared/ssl/:/etc/nginx/ssl
+      - ../deploy/shared/ssl:/etc/nginx/ssl
       - ../deploy/shared/logs/nginx/:/var/log/nginx
       - ../deploy/shared/logs/supervisor/:/var/log/supervisor
     ports:
