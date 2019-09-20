@@ -26,8 +26,8 @@ services:
         - INSTALL_SOCKETS=${PHP_INSTALL_SOCKETS}
         - INSTALL_RDKAFKA=${PHP_INSTALL_RDKAFKA}
         - INSTALL_PHPREDIS=${PHP_INSTALL_PHPREDIS}
-        - INSTALL_NODE=${PHP_INSTALL_NODE}
-        - INSTALL_YARN=${PHP_INSTALL_YARN}
+        - INSTALL_NODE=${INSTALL_NODE}
+        - INSTALL_YARN=${INSTALL_YARN}
     volumes:
       - ../:/var/www:cached
       - ../deploy/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
@@ -64,8 +64,8 @@ services:
         - INSTALL_SOCKETS=${PHP_INSTALL_SOCKETS}
         - INSTALL_RDKAFKA=${PHP_INSTALL_RDKAFKA}
         - INSTALL_PHPREDIS=${PHP_INSTALL_PHPREDIS}
-        - INSTALL_NODE=${PHP_INSTALL_NODE}
-        - INSTALL_YARN=${PHP_INSTALL_YARN}
+        - INSTALL_NODE=${INSTALL_NODE}
+        - INSTALL_YARN=${INSTALL_YARN}
     volumes:
       - ../:/var/www:cached
       - ../deploy/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
